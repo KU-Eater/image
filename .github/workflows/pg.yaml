@@ -29,6 +29,9 @@ jobs:
       - name: Generate date
         id: date
         run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+      - name: Lowercase owner name
+        id: repo_owner
+        run: echo "owner=${{ github.repository_owner }}" | tr '[A-Z]' '[a-z]' >> $GITHUB_OUTPUT
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Login to container registry
@@ -49,5 +52,5 @@ jobs:
             VECTORS_RELEASE=${{ github.event.inputs.vectorsRelease }}
             UUIDV7_RELEASE=${{ github.event.inputs.uuidv7Release }}
           tags: |
-            ghcr.io/${{ github.repository_owner }}/postgres:pg${{ github.event.inputs.pgMajor }}-latest
-            ghcr.io/${{ github.repository_owner }}/postgres:pg${{ github.event.inputs.pgMajor }}-${{ steps.date.outputs.date }}
+            ghcr.io/${{ steps.repo_owner.outputs.owner }}/postgres:pg${{ github.event.inputs.pgMajor }}-latest
+            ghcr.io/${{ steps.repo_owner.outputs.owner }}/postgres:pg${{ github.event.inputs.pgMajor }}-${{ steps.date.outputs.date }}
