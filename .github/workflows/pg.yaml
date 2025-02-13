@@ -1,5 +1,5 @@
 # Action to build and publish `postgres` image
-name: Build and Publish `postgres`
+name: Build and Publish postgres
 
 on:
   workflow_dispatch:
